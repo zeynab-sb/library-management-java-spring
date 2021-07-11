@@ -26,7 +26,7 @@ public class Book {
     private String writers;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User publisher;
 
     @Column(name = "date", nullable = false)
