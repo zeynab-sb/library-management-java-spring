@@ -3,6 +3,8 @@ package com.library.main.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Blob;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -30,8 +32,8 @@ public class Book {
     private LocalDateTime date;
 
     @Lob
-    @Column(name = "photo", columnDefinition="BLOB")
-    private byte[] photo;
+    @Column(name = "photo")
+    private Blob photo;
 
     @Column(name = "keywords")
     private String keywords;
@@ -43,4 +45,84 @@ public class Book {
     @UpdateTimestamp
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getISSN() {
+        return ISSN;
+    }
+
+    public void setISSN(long ISSN) {
+        this.ISSN = ISSN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getWriters() {
+        return writers;
+    }
+
+    public void setWriters(String writers) {
+        this.writers = writers;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Blob getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
 }
