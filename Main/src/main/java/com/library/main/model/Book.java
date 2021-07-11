@@ -25,8 +25,9 @@ public class Book {
     @Column(name = "writers", nullable = false)
     private String writers;
 
-    @Column(name = "publisher", nullable = false)
-    private String publisher;
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private User publisher;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
@@ -45,6 +46,20 @@ public class Book {
     @UpdateTimestamp
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
+
+    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, Blob photo, String keywords) {
+        this.ISSN = ISSN;
+        this.title = title;
+        this.writers = writers;
+        this.publisher = publisher;
+        this.date = date;
+        this.photo = photo;
+        this.keywords = keywords;
+    }
+
+    public Book() {
+
+    }
 
     public long getId() {
         return id;
@@ -78,11 +93,11 @@ public class Book {
         this.writers = writers;
     }
 
-    public String getPublisher() {
+    public User getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(User publisher) {
         this.publisher = publisher;
     }
 
