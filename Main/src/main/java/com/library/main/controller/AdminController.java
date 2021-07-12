@@ -12,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -64,4 +66,20 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllTutorials() {
+        //TODO authentication
+        try {
+
+            List<User> users = new ArrayList<>(userRepository.findAll());
+
+            if (users.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
