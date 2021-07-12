@@ -67,7 +67,7 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllTutorials() {
+    public ResponseEntity<List<User>> getAllUsers() {
         //TODO authentication
         try {
 
