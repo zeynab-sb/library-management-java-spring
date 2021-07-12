@@ -28,12 +28,17 @@ public class AdminController {
     @PostMapping("/users")
     public ResponseEntity<User> addUser(@Valid @RequestBody UserRequest userRequest){
         //TODO authentication
+        try {
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         return new ResponseEntity<>(userRepository.save(mapper.toUser(userRequest)), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
+        //TODO authentication
         try {
             userRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
