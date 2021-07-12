@@ -1,5 +1,7 @@
 package com.library.main.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,6 +10,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
+@Getter
+@Setter
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,53 +44,5 @@ public class Comment {
 
     public Comment() {
 
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public LocalDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public void setCreateDateTime(LocalDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
     }
 }

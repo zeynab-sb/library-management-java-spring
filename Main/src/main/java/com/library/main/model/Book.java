@@ -1,5 +1,7 @@
 package com.library.main.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
+@Getter
+@Setter
 public class Book {
 
     @Id
@@ -61,83 +65,4 @@ public class Book {
 
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getISSN() {
-        return ISSN;
-    }
-
-    public void setISSN(long ISSN) {
-        this.ISSN = ISSN;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getWriters() {
-        return writers;
-    }
-
-    public void setWriters(String writers) {
-        this.writers = writers;
-    }
-
-    public User getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(User publisher) {
-        this.publisher = publisher;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public Blob getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Blob photo) {
-        this.photo = photo;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public LocalDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public void setCreateDateTime(LocalDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
-}
+  }
