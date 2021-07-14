@@ -20,13 +20,17 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Column(name = "authority", nullable = false)
+    private String authority;
 
-    public User(String username, String password, String role){
+    @Column(name = "enabled", nullable = false)
+    private Boolean enabled;
+
+    public User(String username, String password, String authority, Boolean enabled){
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.authority = authority;
+        this.enabled = enabled;
     }
 
     public User() {
@@ -39,7 +43,8 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", authority='" + authority + '\'' +
+                ", enabled='" + enabled + '\'' +
                 '}';
     }
 }
