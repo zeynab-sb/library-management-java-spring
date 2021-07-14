@@ -45,14 +45,14 @@ public class AuthCookieFilter extends GenericFilterBean {
         if (sessionId != null) {
             final String sId = sessionId;
             AppUserDetail userDetails = this.userDetailsCache.get(sessionId, key -> {
-            var sessionInfo = sessionRepository.findSessionById(sId);
-            if(!sessionInfo.isEmpty()) {
-                var record = userRepository.findById(sessionInfo.get(0).getUser().getId());
-                if (record.isPresent()) {
-                    return new AppUserDetail(record.get());
+                var sessionInfo = sessionRepository.findSessionById(sId);
+                if(!sessionInfo.isEmpty()) {
+                    var record = userRepository.findById(sessionInfo.get(0).getUser().getId());
+                    if (record.isPresent()) {
+                        return new AppUserDetail(record.get());
+                    }
+                    return null;
                 }
-                return null;
-            }
                 return null;
             });
 

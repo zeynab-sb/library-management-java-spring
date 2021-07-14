@@ -1,7 +1,6 @@
 package com.library.authentication.controller;
 
 import com.library.authentication.dto.Credential;
-import com.library.authentication.model.AppUserDetail;
 import com.library.authentication.model.Session;
 import com.library.authentication.model.User;
 import com.library.authentication.repository.SessionRepository;
@@ -14,20 +13,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.library.authentication.controller.AuthCookieFilter.extractAuthenticationCookie;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private TokenService tokenService = new TokenService();
+    private final TokenService tokenService = new TokenService();
 
     @Autowired
     private SessionRepository sessionRepository;
@@ -41,7 +44,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody Credential credential) {
 
-
         List<User> userData = userRepository.findByUsername(credential.getUsername());
 
         if((!userData.isEmpty()) && passwordEncoder.matches(credential.getPassword(), userData.get(0).getPassword())){
@@ -52,7 +54,7 @@ public class AuthController {
                 User user = userData.get(0);
                 session.setUser(user);
                 session.setId(sessionId);
-                session.setValid_until(Timestamp.valueOf(LocalDateTime.now().plusHours(3)));
+                session.setValid_until(Timestamp.valueOf(LocalDateTime.now().plusDays(30)));
                 sessionRepository.save(session);
 
                 ResponseCookie cookie = ResponseCookie
@@ -72,11 +74,24 @@ public class AuthController {
     }
 
     @GetMapping("/authenticate")
-    @PreAuthorize("isFullyAuthenticated()")
-    public String authenticate(@AuthenticationPrincipal AppUserDetail user) {
-        JSONObject userInfo = new JSONObject();
-        userInfo.put("authority", user.getAuthorities().iterator().next().getAuthority());
-        userInfo.put("id", user.getAppUserId());
-        return userInfo.toString();
+    public Object authenticate(ServletRequest servletRequest, ServletResponse servletResponse) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String sessionId = extractAuthenticationCookie(httpServletRequest);
+        if (sessionId != null) {
+                var sessionInfo = sessionRepository.findSessionById(sessionId);
+                if(!sessionInfo.isEmpty()) {
+                    var record = userRepository.findById(sessionInfo.get(0).getUser().getId());
+                    if (record.isPresent()) {
+                        JSONObject userInfo = new JSONObject();
+                        userInfo.put("authority", record.get().getAuthority());
+                        userInfo.put("id", record.get().getId());
+                        return userInfo.toString();
+                    }
+                }
+
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
     }
 }
