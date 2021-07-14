@@ -6,7 +6,7 @@ import com.library.main.model.User;
 public class Mapper {
 
     public User toUser(UserRequest userRequest){
-        return new User(userRequest.getUsername(), userRequest.getPassword(), userRequest.getRole());
+        return new User(userRequest.getUsername(), userRequest.getPassword(), userRequest.getAuthority(), userRequest.getEnabled());
     }
 
 }

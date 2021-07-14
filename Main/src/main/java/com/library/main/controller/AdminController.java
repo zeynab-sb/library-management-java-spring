@@ -59,7 +59,7 @@ public class AdminController {
             User _user = userData.get();
             _user.setUsername(userRequest.getUsername());
             _user.setPassword(userRequest.getPassword());
-            _user.setRole(userRequest.getRole());
+            _user.setAuthority(userRequest.getAuthority());
             return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
