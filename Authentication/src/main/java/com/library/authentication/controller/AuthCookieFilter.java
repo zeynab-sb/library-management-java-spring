@@ -6,9 +6,6 @@ import com.library.authentication.model.AppUserDetail;
 import com.library.authentication.repository.SessionRepository;
 import com.library.authentication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -19,7 +16,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AuthCookieFilter extends GenericFilterBean {
@@ -49,7 +45,6 @@ public class AuthCookieFilter extends GenericFilterBean {
         if (sessionId != null) {
             final String sId = sessionId;
             AppUserDetail userDetails = this.userDetailsCache.get(sessionId, key -> {
-//                var record = userRepository.FindUserBySessionId(sId);
             var sessionInfo = sessionRepository.findSessionById(sId);
             if(!sessionInfo.isEmpty()) {
                 var record = userRepository.findById(sessionInfo.get(0).getUser().getId());

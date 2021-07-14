@@ -19,6 +19,5 @@ public class UserRequest {
     @NotEmpty(message = "role is required")
     private String authority;
 
-//    @NotEmpty(message = "status is required")
     private Boolean enabled;
 }
