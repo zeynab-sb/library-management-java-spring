@@ -5,8 +5,10 @@
     <title>JSP Page</title></head>
 <body><h1>Login Page</h1>
 <center><h2>Signup Details</h2>
-    <form action="LoginCheck.jsp" method="post"><br/>Username:<input type="text" name="username"> <br/>Password:<input
-            type="password" name="password"> <br/><input type="submit" value="Submit"></form>
+    <form method="POST" action="http://localhost:8080/auth/login">
+        Username : <input type="text" name="username" value="username" /><br><br>
+        Password : <input type="password" name="password" value="password" /><br><br>
+        Login:  <input type="submit" name="Login" />
 </center>
 </body>
 </html>

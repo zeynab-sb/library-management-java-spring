@@ -37,6 +37,12 @@ public class User {
 
     }
 
+    public String getUsername(){
+        return username;
+    }
+    public boolean getEnabled(){
+        return enabled;
+    }
     @Override
     public String toString() {
         return "User{" +

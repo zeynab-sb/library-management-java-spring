@@ -4,17 +4,17 @@ import com.library.main.dto.UserRequest;
 import com.library.main.model.User;
 import com.library.main.repository.UserRepository;
 import com.library.main.utils.Mapper;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @Validated
@@ -67,19 +67,29 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ModelAndView getAllUsers() {
         //TODO authentication
         try {
 
             List<User> users = new ArrayList<>(userRepository.findAll());
 
             if (users.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
-            return new ResponseEntity<>(users, HttpStatus.OK);
+            Map<String, Object> response = new HashMap<String, Object>();
+            System.out.println(users.size());
+            response.put("users", users);
+            //return new ResponseEntity<>(users, HttpStatus.OK);
+            return new ModelAndView("users" , response);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ModelAndView("500")
+;            //return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/401")
+    public ModelAndView get401() {
+        return new ModelAndView("401");
+    }
+
+
 }
