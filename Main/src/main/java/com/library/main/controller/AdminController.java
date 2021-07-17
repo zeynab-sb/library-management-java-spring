@@ -52,7 +52,7 @@ public class AdminController {
                 userRepository.deleteById(id);
             }
 
-            return getAllUsers();
+            return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
         } catch (Exception e) {
             return new ModelAndView("500");
         }
