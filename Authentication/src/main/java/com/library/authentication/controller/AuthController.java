@@ -51,7 +51,6 @@ public class AuthController {
 
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
-        System.out.println("hiii");
         List<User> userData = userRepository.findByUsername(username);
 
         if ((!userData.isEmpty()) && passwordEncoder.matches(password, userData.get(0).getPassword())) {
@@ -76,15 +75,15 @@ public class AuthController {
 
              ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
             .body(userInfo.toString());
-            // if(userData.get(0).getAuthority().equals("admin")) {
+             if(userData.get(0).getAuthority().equals("admin")) {
                  return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
-            // }
+             }
 
         }
 
          ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
-       // return new ModelAndView("401");
+//        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
+        return new ModelAndView("401");
 
     }
 //    @GetMapping("/401")
