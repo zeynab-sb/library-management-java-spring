@@ -70,20 +70,13 @@ public class AdminController {
     public ModelAndView getAllUsers() {
         //TODO authentication
         try {
-
             List<User> users = new ArrayList<>(userRepository.findAll());
-
-            if (users.isEmpty()) {
-                //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            Map<String, Object> response = new HashMap<String, Object>();
-            System.out.println(users.size());
-            response.put("users", users);
-            //return new ResponseEntity<>(users, HttpStatus.OK);
-            return new ModelAndView("users" , response);
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.setViewName("admin");
+            modelAndView.addObject ( "users", users);
+            return modelAndView;
         } catch (Exception e) {
-            return new ModelAndView("500")
-;            //return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ModelAndView("500");
         }
     }
     @GetMapping("/401")
