@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <html lang="en">
 <head>
     <meta charset="ISO-8859-1">
@@ -38,9 +39,14 @@
             <td>${user.username}</td>
             <td>${user.authority}</td>
             <td>
-                <form method="DELETE" action="${pageContext.request.contextPath}/admin/users/${user.id}">
+                <form method="GET" action="${pageContext.request.contextPath}/admin/users/${user.id}">
                     <input type=submit value="Delete" style="width:100%">
                 </form>
+<%--                <form action="#" th:action="@{'/admin/user/{id}'(id=${user.id})}" th:method="get" >--%>
+<%--                    <button type="submit" class="btn">--%>
+<%--                        Delete--%>
+<%--                    </button>--%>
+<%--                </form>--%>
             </td>
             <td><form><input type=submit value="Delete" style="width:100%"></form></td>
 

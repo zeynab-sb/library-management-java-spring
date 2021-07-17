@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -38,14 +39,22 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
+    @GetMapping("/users/{id}")
+    public ModelAndView deleteUser(@PathVariable("id") long id) {
         //TODO authentication
         try {
-            userRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            RestTemplate restTemplate = new RestTemplate();
+            String clearSessionURL = "http://localhost:8080/auth/clear";
+            ResponseEntity<String> response = restTemplate.getForEntity(clearSessionURL + "/" + id, String.class);
+
+            if(response.getStatusCode().equals(HttpStatus.OK)){
+                userRepository.deleteById(id);
+            }
+
+            return getAllUsers();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ModelAndView("500");
         }
     }
 

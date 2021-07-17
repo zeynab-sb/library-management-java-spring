@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title></head>
+    <title>Login Page</title></head>
 <body>
 <center><h2>Login Page</h2>
     <form method="POST" action="http://localhost:8080/auth/login">
