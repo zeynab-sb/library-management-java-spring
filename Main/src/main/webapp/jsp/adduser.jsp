@@ -7,7 +7,7 @@
 <html lang="en">
 <body>
 <center><h2>Add User Page</h2>
-    <form method="POST" action="${pageContext.request.contextPath}/admin/users">
+    <form method="POST" action="http://localhost:9090/admin/users">
         Username : <input type="text" name="username"/><br><br>
         Password : <input type="password" name="password"/><br><br>
         Authority : <input type="text" name="authority"/><br><br>

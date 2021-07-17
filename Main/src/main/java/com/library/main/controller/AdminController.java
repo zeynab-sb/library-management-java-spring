@@ -6,6 +6,7 @@ import com.library.main.repository.UserRepository;
 import com.library.main.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -28,14 +29,16 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/users")
-    public ModelAndView addUser(@Valid @RequestBody UserRequest userRequest){
+    @RequestMapping(value = "/users", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
+            MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ModelAndView addUser(@RequestParam Map<String, String> userRequest){
         //TODO authentication
-        try {
-            System.out.println("adddd useeeeeeeeeeeeeeeeeer");
-        userRequest.setEnabled(true);
-        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        userRepository.save(mapper.toUser(userRequest));
+        try { User user = new User();
+        user.setEnabled(true);
+        user.setPassword(passwordEncoder.encode(userRequest.get("password")));
+        user.setUsername(userRequest.get("username"));
+        user.setAuthority(userRequest.get("authority"));
+        userRepository.save(user);
         return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
 
         } catch (Exception e) {
