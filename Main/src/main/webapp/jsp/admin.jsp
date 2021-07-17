@@ -43,7 +43,19 @@
                     <input type=submit value="Delete" style="width:100%">
                 </form>
             </td>
-            <td><form><input type=submit value="Delete" style="width:100%"></form></td>
+            <td>
+<%--&lt;%&ndash;                <form>&ndash;%&gt;--%>
+<%--                    <input type=submit value="Edit" onclick="window.location='/jsp/edituser.jsp'" style="width:100%">--%>
+<%--&lt;%&ndash;                </form>&ndash;%&gt;--%>
+    <form action="/jsp/edituser.jsp" method="post">
+        <input  type="hidden" name="userid" value="${user.id}" />
+        <input  type="hidden" name="username" value="${user.username}" />
+        <input  type="hidden" name="password" value="${user.password}" />
+        <input  type="hidden" name="authority" value="${user.authority}" />
+        <input  type="submit" value="Edit"  style="width:100%"/>
+    </form>
+
+            </td>
 
         </tr>
     </c:forEach>
