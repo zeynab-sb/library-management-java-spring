@@ -47,13 +47,7 @@
 
         </tr>
     </c:forEach>
-
-    <td align="center">
-        <input type="button" name="Add New User"
-               onClientClick="window.open('adduser.jsp','popuppage','width=100%,toolbar=1,
-        resizable=1,scrollbars=yes,height=700,top=100,left=100');" value="Add New User">
-    </td>
-
+    <input type="button" value="Add User" onclick="window.location='/jsp/adduser.jsp'" >
 </table>
 </body>
 </html>

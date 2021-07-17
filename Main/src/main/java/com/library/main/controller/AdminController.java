@@ -29,13 +29,17 @@ public class AdminController {
     private UserRepository userRepository;
 
     @PostMapping("/users")
-    public ResponseEntity<User> addUser(@Valid @RequestBody UserRequest userRequest){
+    public ModelAndView addUser(@Valid @RequestBody UserRequest userRequest){
         //TODO authentication
         try {
+            System.out.println("adddd useeeeeeeeeeeeeeeeeer");
+        userRequest.setEnabled(true);
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        return new ResponseEntity<>(userRepository.save(mapper.toUser(userRequest)), HttpStatus.CREATED);
+        userRepository.save(mapper.toUser(userRequest));
+        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ModelAndView("500");
         }
     }
 

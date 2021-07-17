@@ -7,10 +7,11 @@
 <html lang="en">
 <body>
 <center><h2>Add User Page</h2>
-    <form method="POST" action="http://localhost:8080/auth/login">
-        Username : <input type="text" name="username" value="username" /><br><br>
-        Password : <input type="password" name="password" value="password" /><br><br>
-        <input type="submit" name="Login" />
+    <form method="POST" action="${pageContext.request.contextPath}/admin/users">
+        Username : <input type="text" name="username"/><br><br>
+        Password : <input type="password" name="password"/><br><br>
+        Authority : <input type="text" name="authority"/><br><br>
+        <input type="submit" name="Add" />
 </center>
 </body>
 </html>
