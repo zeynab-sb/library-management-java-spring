@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Products List</title>
+    <title>Users</title>
     <style>
         table, td {
             border: 1px solid rgb(194, 18, 194);
@@ -47,6 +47,12 @@
 
         </tr>
     </c:forEach>
+
+    <td align="center">
+        <input type="button" name="Add New User"
+               onClientClick="window.open('adduser.jsp','popuppage','width=100%,toolbar=1,
+        resizable=1,scrollbars=yes,height=700,top=100,left=100');" value="Add New User">
+    </td>
 
 </table>
 </body>
