@@ -28,8 +28,8 @@
         <th>ID</th>
         <th>Username</th>
         <th>Authority</th>
-        <th>Edit</th>
         <th>Delete</th>
+        <th>Edit</th>
     </tr>
 
 
@@ -42,11 +42,6 @@
                 <form method="GET" action="${pageContext.request.contextPath}/admin/users/${user.id}">
                     <input type=submit value="Delete" style="width:100%">
                 </form>
-<%--                <form action="#" th:action="@{'/admin/user/{id}'(id=${user.id})}" th:method="get" >--%>
-<%--                    <button type="submit" class="btn">--%>
-<%--                        Delete--%>
-<%--                    </button>--%>
-<%--                </form>--%>
             </td>
             <td><form><input type=submit value="Delete" style="width:100%"></form></td>
 
