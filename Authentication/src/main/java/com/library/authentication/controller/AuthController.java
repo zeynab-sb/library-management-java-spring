@@ -1,6 +1,5 @@
 package com.library.authentication.controller;
 
-import com.library.authentication.dto.Credential;
 import com.library.authentication.model.Session;
 import com.library.authentication.model.User;
 import com.library.authentication.repository.SessionRepository;
@@ -9,8 +8,8 @@ import com.library.authentication.service.TokenService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,16 +17,17 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.library.authentication.controller.AuthCookieFilter.extractAuthenticationCookie;
 
 @RestController
+@Transactional
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -113,4 +113,12 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
+
+    @GetMapping("/clear/{id}")
+    public Boolean clearAllSessions(@PathVariable("id") long id){
+        Optional<User> user = userRepository.findById(id);
+        sessionRepository.deleteAllByUser(user.get());
+        return true;
+    }
+
 }

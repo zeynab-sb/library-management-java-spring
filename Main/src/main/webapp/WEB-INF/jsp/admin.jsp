@@ -37,8 +37,12 @@
             <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.authority}</td>
-            <td>edit</td>
-            <td>delete</td>
+            <td>
+                <form method="DELETE" action="${pageContext.request.contextPath}/admin/users/${user.id}">
+                    <input type=submit value="Delete" style="width:100%">
+                </form>
+            </td>
+            <td><form><input type=submit value="Delete" style="width:100%"></form></td>
 
         </tr>
     </c:forEach>
