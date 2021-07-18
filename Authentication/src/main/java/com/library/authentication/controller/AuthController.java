@@ -45,8 +45,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //    @PostMapping("/login")
-//    public ResponseEntity<String> login(@Valid @RequestBody  Credential credential) {
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
             MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     void login(@RequestParam Map<String, String> loginRequest, Principal principal,
@@ -70,23 +69,16 @@ public class AuthController {
             Cookie cookie = new Cookie("persist", sessionId);
             cookie.setMaxAge(3600);
             cookie.setHttpOnly(true);
-//            ResponseCookie cookie = ResponseCookie
-//                    .from(AuthCookieFilter.COOKIE_NAME, sessionId)
-//                    .maxAge(3600).sameSite("Strict")
-//                    .path("/").httpOnly(true).secure(false).build();
+            cookie.setPath("/");
 
             JSONObject userInfo = new JSONObject();
             userInfo.put("authority", userData.get(0).getAuthority());
             userInfo.put("id", userData.get(0).getId());
 
-//             ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-//            .body(userInfo.toString());
-
             response.addCookie(cookie);
 
              if(userData.get(0).getAuthority().equals("admin")) {
                  response.sendRedirect("http://localhost:9090/admin/users");
-//                 return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
              }
 
         }
@@ -96,11 +88,7 @@ public class AuthController {
 //         return new ModelAndView("401");
 
     }
-//    @GetMapping("/401")
-//    public ModelAndView get401Error() {
-//
-//
-//    }
+
     @GetMapping("/authenticate")
     public Object authenticate(ServletRequest servletRequest, ServletResponse servletResponse) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;

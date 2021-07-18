@@ -69,7 +69,7 @@ public class AuthCookieFilter extends GenericFilterBean {
         Cookie[] cookies = httpServletRequest.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(AuthCookieFilter.COOKIE_NAME)) {
+                if (cookie.getName().equals("persist")) {
                     sessionId = cookie.getValue();
                     break;
                 }
