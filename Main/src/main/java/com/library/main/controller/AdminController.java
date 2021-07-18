@@ -65,20 +65,29 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody UserRequest userRequest) {
+    @RequestMapping(value="/users/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
+            MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ModelAndView updateUser(@PathVariable("id") long id, @RequestParam Map<String, String> userRequest) {
         //TODO authentication
+        System.out.println("caaal shoood");
         Optional<User> userData = userRepository.findById(id);
+try {
+    if (userData.isPresent()) {
+        User _user = userData.get();
+        _user.setUsername(userRequest.get("username"));
+        _user.setPassword(userRequest.get("password"));
+        _user.setAuthority(userRequest.get("authority"));
+        userRepository.save(_user);
+        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
+    } else {
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ModelAndView("404");
 
-        if (userData.isPresent()) {
-            User _user = userData.get();
-            _user.setUsername(userRequest.getUsername());
-            _user.setPassword(userRequest.getPassword());
-            _user.setAuthority(userRequest.getAuthority());
-            return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    }
+}catch(Exception e){
+    e.printStackTrace();
+    return new ModelAndView("500");
+}
     }
 
     @GetMapping("/users")
