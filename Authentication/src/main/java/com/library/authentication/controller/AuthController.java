@@ -15,8 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -46,8 +49,8 @@ public class AuthController {
 //    public ResponseEntity<String> login(@Valid @RequestBody  Credential credential) {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
             MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    ModelAndView login(@RequestParam Map<String, String> loginRequest, Principal principal,
-                       HttpServletResponse response) {
+    void login(@RequestParam Map<String, String> loginRequest, Principal principal,
+                       HttpServletResponse response) throws IOException {
 
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
@@ -64,26 +67,33 @@ public class AuthController {
             session.setValid_until(Timestamp.valueOf(LocalDateTime.now().plusDays(30)));
             sessionRepository.save(session);
 
-            ResponseCookie cookie = ResponseCookie
-                    .from(AuthCookieFilter.COOKIE_NAME, sessionId)
-                    .maxAge(3600).sameSite("Strict")
-                    .path("/").httpOnly(true).secure(false).build();
+            Cookie cookie = new Cookie("persist", sessionId);
+            cookie.setMaxAge(3600);
+            cookie.setHttpOnly(true);
+//            ResponseCookie cookie = ResponseCookie
+//                    .from(AuthCookieFilter.COOKIE_NAME, sessionId)
+//                    .maxAge(3600).sameSite("Strict")
+//                    .path("/").httpOnly(true).secure(false).build();
 
             JSONObject userInfo = new JSONObject();
             userInfo.put("authority", userData.get(0).getAuthority());
             userInfo.put("id", userData.get(0).getId());
 
-             ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-            .body(userInfo.toString());
+//             ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+//            .body(userInfo.toString());
+
+            response.addCookie(cookie);
+
              if(userData.get(0).getAuthority().equals("admin")) {
-                 return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
+                 response.sendRedirect("http://localhost:9090/admin/users");
+//                 return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
              }
 
         }
 
-         ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
-        return new ModelAndView("401");
+//         ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+////        return new ModelAndView("redirect:" + "http://localhost:9090/admin/users");
+//         return new ModelAndView("401");
 
     }
 //    @GetMapping("/401")
