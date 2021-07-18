@@ -80,6 +80,9 @@ public class AuthController {
              if(userData.get(0).getAuthority().equals("admin")) {
                  response.sendRedirect("http://localhost:9090/admin/users");
              }
+            else if(userData.get(0).getAuthority().equals("publisher")) {
+                response.sendRedirect("http://localhost:7070/books");
+            }
 
         }
 
