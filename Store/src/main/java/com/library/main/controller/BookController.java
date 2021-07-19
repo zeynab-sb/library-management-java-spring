@@ -2,7 +2,6 @@ package com.library.main.controller;
 
 import com.library.main.model.Book;
 import com.library.main.repository.BookRepository;
-import com.library.main.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,10 +21,6 @@ import java.util.Optional;
 @Validated
 @RequestMapping("/")
 public class BookController {
-    private final Mapper mapper = new Mapper();
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private BookRepository bookRepository;
