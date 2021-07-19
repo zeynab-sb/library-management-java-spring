@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Blob;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -66,8 +67,8 @@ public class Book {
 
     }
 public LocalDateTime convertStrToDate(String str){
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime dateTime =  LocalDate.parse(str).atStartOfDay();
     return dateTime;
 
 }
