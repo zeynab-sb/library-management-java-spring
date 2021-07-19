@@ -15,7 +15,7 @@
         Keywords : <input type="text" name="Keywords"/><br><br>
         ISSN : <input type="text" name="ISSN"/><br><br>
         Date : <input type="text" name="Date"/><br><br>
-        Image : <input type="text" name="Image"/><br><br>
+        Image : <input type="file" name="Image"/><br><br>
                 <input type="hidden" type="text" name="Publisher" readonly="readonly"
                            value="<%=publisher%>"/><br><br>
         <input type="submit" name="Add" />

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class BookController {
             book.setKeywords(bookRequest.get("Keywords"));
             Optional<User> user = userRepository.findById(Long.valueOf(bookRequest.get("Publisher")));
             book.setPublisher(user.get());
+            File image= new File(bookRequest.get("Image"));
             bookRepository.save(book);
             return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/" + bookRequest.get("Publisher"));
 
