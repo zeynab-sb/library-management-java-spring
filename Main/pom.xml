@@ -70,7 +70,11 @@
             <artifactId>spring-context</artifactId>
             <version>5.3.8</version>
         </dependency>
-<!--        <dependency>-->
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+        </dependency>
+        <!--        <dependency>-->
 <!--            <groupId>org.glassfish.web</groupId>-->
 <!--            <artifactId>jakarta.servlet.jsp.jstl</artifactId>-->
 <!--            <version>1.2.6</version>-->

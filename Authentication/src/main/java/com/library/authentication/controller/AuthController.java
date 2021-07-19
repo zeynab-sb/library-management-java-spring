@@ -84,6 +84,10 @@ public class AuthController {
                 response.getWriter().write(userInfo.toString());
                 response.sendRedirect("http://localhost:9091/book_publisher/" + userData.get(0).getId());
             }
+             else if(userData.get(0).getAuthority().equals("reader")) {
+//                 response.getWriter().write(userInfo.toString());
+                 response.sendRedirect("http://localhost:9090/books");
+             }
 
         }
 
@@ -93,10 +97,10 @@ public class AuthController {
 
     }
 
-    @GetMapping("/authenticate")
-    public Object authenticate(ServletRequest servletRequest, ServletResponse servletResponse) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String sessionId = extractAuthenticationCookie(httpServletRequest);
+    @GetMapping("/authenticate/{sessionId}")
+    public Object authenticate(@PathVariable("sessionId") String sessionId) {
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+//        String sessionId = extractAuthenticationCookie(httpServletRequest);
         if (sessionId != null) {
             var sessionInfo = sessionRepository.findSessionById(sessionId);
             if (!sessionInfo.isEmpty()) {

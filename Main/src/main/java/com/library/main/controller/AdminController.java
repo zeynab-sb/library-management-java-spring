@@ -68,8 +68,6 @@ public class AdminController {
     @RequestMapping(value="/users/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
             MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ModelAndView updateUser(@PathVariable("id") long id, @RequestParam Map<String, String> userRequest) {
-        //TODO authentication
-        System.out.println("caaal shoood");
         Optional<User> userData = userRepository.findById(id);
 try {
     if (userData.isPresent()) {
