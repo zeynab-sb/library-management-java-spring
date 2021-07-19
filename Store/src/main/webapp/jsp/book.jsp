@@ -41,7 +41,7 @@
         </head>
         <body>
 
-        <h1 style="text-align:center; color: rgb(145, 8, 104)">Users</h1>
+        <h1 style="text-align:center; color: rgb(145, 8, 104)">Books</h1>
         <table style="width:100%">
             <tr>
                 <th>ID</th>

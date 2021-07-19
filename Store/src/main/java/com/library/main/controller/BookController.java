@@ -93,19 +93,6 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books")
-    public ModelAndView getAllUsers() {
-        //TODO authentication
-        try {
-            List<Book> books = new ArrayList<>(bookRepository.findAll());
-            ModelAndView modelAndView=new ModelAndView();
-            modelAndView.setViewName("book");
-            modelAndView.addObject ( "books", books);
-            return modelAndView;
-        } catch (Exception e) {
-            return new ModelAndView("500");
-        }
-    }
     @GetMapping("/401")
     public ModelAndView get401() {
         return new ModelAndView("401");
