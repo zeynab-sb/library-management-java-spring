@@ -66,7 +66,7 @@
                     <td>${book.photo}</td>
                     <td>${book.keywords}</td>
                     <td>
-                        <form method="GET" action="${pageContext.request.contextPath}/books/${book.id}">
+                        <form method="GET" action="${pageContext.request.contextPath}/books/${book.id}/${id}">
                             <input type=submit value="Delete" style="width:100%;color:darkred">
                         </form>
                     </td>

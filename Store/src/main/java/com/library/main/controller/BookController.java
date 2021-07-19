@@ -62,23 +62,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books/{id}")
-    public ModelAndView deleteBook(@PathVariable("id") long id) {
-        //TODO authentication
-        try {
-
-            RestTemplate restTemplate = new RestTemplate();
-            String clearSessionURL = "http://localhost:8080/auth/clear";
-            ResponseEntity<String> response = restTemplate.getForEntity(clearSessionURL + "/" + id, String.class);
-
-            if(response.getStatusCode().equals(HttpStatus.OK)){
-                bookRepository.deleteById(id);
-            }
-
-            return new ModelAndView("redirect:" + "http://localhost:7070/books/");
-        } catch (Exception e) {
-            return new ModelAndView("500");
-        }
+    @GetMapping("/books/{bookid}/{userid}")
+    public ModelAndView deleteBook(@PathVariable("bookid") long id, @PathVariable("userid") long user) {
+            bookRepository.deleteById(id);
+            return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/"+ user);
     }
 
     @RequestMapping(value="/books/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
