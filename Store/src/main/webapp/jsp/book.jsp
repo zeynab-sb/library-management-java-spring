@@ -76,9 +76,10 @@
                             <input  type="hidden" name="title" value="${book.title}" />
                             <input  type="hidden" name="writer" value="${book.writers}" />
                             <input  type="hidden" name="issn" value="${book.ISSN}" />
-                            <input  type="hidden" name="publisher" value="${book.publisher}" />
+                            <input  type="hidden" name="publisher" value="${id}" />
                             <input  type="hidden" name="image" value="${book.photo}" />
                             <input  type="hidden" name="keywords" value="${book.keywords}" />
+                            <input  type="hidden" name="date" value="${book.date}" />
 
                             <input  type="submit" value="Edit"  style="width:100%"/>
                         </form>

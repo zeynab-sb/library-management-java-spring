@@ -49,7 +49,7 @@ public class BookController {
             book.setISSN(Long.valueOf(bookRequest.get("ISSN")));
             book.setTitle(bookRequest.get("Title"));
             book.setWriters(bookRequest.get("Writer"));
-            book.setDate(book.convertStrToDate(bookRequest.get("Date")));
+            book.setDate(book.convertStrToDate(bookRequest.get("Date").substring(0,10)));
             book.setKeywords(bookRequest.get("Keywords"));
             Optional<User> user = userRepository.findById(Long.valueOf(bookRequest.get("Publisher")));
             book.setPublisher(user.get());
@@ -70,25 +70,20 @@ public class BookController {
 
     @RequestMapping(value="/books/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
             MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ModelAndView updateUser(@PathVariable("id") long id, @RequestParam Map<String, String> bookRequest) {
-        //TODO authentication
-        System.out.println("caaal shoood");
+    public ModelAndView updateBook(@PathVariable("id") long id, @RequestParam Map<String, String> bookRequest) {
+
         Optional<Book> bookData = bookRepository.findById(id);
         try {
             if (bookData.isPresent()) {
                 Book book = bookData.get();
-//                _user.setUsername(userRequest.get("username"));
-//                _user.setPassword(userRequest.get("password"));
-//                _user.setAuthority(userRequest.get("authority"));
-                book.setDate(book.convertStrToDate(bookRequest.get("Date")));
+                book.setDate(book.convertStrToDate(bookRequest.get("Date").substring(0,10)));
                 book.setISSN(Long.valueOf(bookRequest.get("ISSN")));
                 book.setKeywords(bookRequest.get("Keywords"));
                 book.setTitle(bookRequest.get("Title"));
                 book.setWriters(bookRequest.get("Writers"));
                 bookRepository.save(book);
-                return new ModelAndView("redirect:" + "http://localhost:7070/books");
+                return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/"+ bookRequest.get("Publisher"));
             } else {
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 return new ModelAndView("404");
 
             }

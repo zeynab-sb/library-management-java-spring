@@ -22,46 +22,57 @@
 <% String publisher=request.getParameter("publisher");  %>
 <% String image=request.getParameter("image");  %>
 <% String keywords=request.getParameter("keywords");  %>
+<% String date=request.getParameter("date");  %>
 
 
 
-<form method="POST" action="http://localhost:7070/books/<%=id%>">
+
+<form method="POST" action="http://localhost:9091/books/<%=id%>">
     <table>
         <tr>
-            <td>User ID</td>
+            <td>Book ID</td>
             <td><input type="text" name="Id" readonly="readonly"
                        value="<%=id%>"></td>
         </tr>
         <tr>
-            <td>UserName</td>
-            <td><input type="text" name="title"
+            <td>Title</td>
+            <td><input type="text" name="Title"
                        value="<%=title%>"/></td>
         </tr>
         <tr>
-            <td>Authority</td>
-            <td><input type="text" name="writers"
+            <td>Writers</td>
+            <td><input type="text" name="Writers"
                        value="<%=writer%>"/></td>
         </tr>
         <tr>
-            <td>Password</td>
-            <td><input type="text" name="issn"
-                       value="<%=issn%>"/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="text" name="publisher"
-                       value="<%=publisher%>"/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="text" name="image"
-                       value="<%=image%>"/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="text" name="keywords"
+            <td>Keywords</td>
+            <td><input type="text" name="Keywords"
                        value="<%=keywords%>"/></td>
         </tr>
+        <tr>
+            <td>ISSN</td>
+            <td><input type="text" name="ISSN"
+                       value="<%=issn%>"/></td>
+        </tr>
+
+        <tr>
+            <td>Date</td>
+            <td><input type="text" name="Date"
+                       value="<%=date%>"/></td>
+        </tr>
+
+        <tr>
+            <td>Image</td>
+            <td><input type="text" name="Image"
+                       value="<%=image%>"/></td>
+        </tr>
+
+        <tr>
+            <td>Publisher</td>
+            <td><input type="text" name="Publisher"
+                       value="<%=publisher%>"/></td>
+        </tr>
+
         <tr>
             <td></td>
             <td>
