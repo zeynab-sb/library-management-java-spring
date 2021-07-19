@@ -30,9 +30,11 @@
 <form method="POST" action="http://localhost:9091/books/<%=id%>">
     <table>
         <tr>
-            <td>Book ID</td>
-            <td><input type="text" name="Id" readonly="readonly"
-                       value="<%=id%>"></td>
+<%--            <td>Book ID</td>--%>
+<%--            <td>--%>
+                <input type="hidden" type="text" name="Id" readonly="readonly"
+                       value="<%=id%>">
+<%--            </td>--%>
         </tr>
         <tr>
             <td>Title</td>

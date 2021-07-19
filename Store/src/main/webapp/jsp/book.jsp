@@ -45,7 +45,6 @@
         <h1 style="text-align:center; color: rgb(145, 8, 104)">Books</h1>
         <table style="width:100%">
             <tr>
-                <th>ID</th>
                 <th>Title</th>
                 <th>Writer</th>
                 <th>Date</th>
@@ -60,7 +59,6 @@
 
             <c:forEach items="${books}" var="book">
                 <tr>
-                    <td>${book.id}</td>
                     <td>${book.title}</td>
                     <td>${book.writers}</td>
                     <c:set var = "date" value = '${book.date}'/>
