@@ -86,7 +86,7 @@ public class AuthController {
             }
              else if(userData.get(0).getAuthority().equals("reader")) {
 //                 response.getWriter().write(userInfo.toString());
-                 response.sendRedirect("http://localhost:9090/books");
+                 response.sendRedirect("http://localhost:9090/reader/books");
              }
 
         }

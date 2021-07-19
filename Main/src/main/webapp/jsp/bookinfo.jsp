@@ -1,8 +1,4 @@
 <%@ page import="org.springframework.web.client.RestTemplate" %>
-<%@ page import="org.springframework.http.ResponseEntity" %>
-<%@ page import="org.springframework.http.HttpStatus" %>
-<%@ page import="org.apache.tomcat.util.json.JSONParser" %>
-<%@ page import="net.minidev.json.JSONObject" %>
 <%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
 <%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,7 +9,6 @@
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%--<% Boolean haveCookie = false; %>--%>
 <c:set var="haveCookie" value="false" />
 <c:set var="isReader" value="false" />
 <c:set var="id" value="1" />
@@ -37,8 +32,6 @@
 
                 pageContext.setAttribute("id", jsonObj.get("id"));
                 pageContext.setAttribute("isReader", "true");
-//                }
-
                 break;
             }
 
@@ -52,7 +45,7 @@
         <html lang="en">
         <head>
             <meta charset="ISO-8859-1">
-            <title>Books</title>
+            <title>${book.title}</title>
             <style>
                 table, td {
                     border: 1px solid rgb(194, 18, 194);
@@ -68,36 +61,56 @@
         </head>
         <body>
 
-        <h1 style="text-align:center; color: rgb(145, 8, 104)">Books</h1>
+        <br>Title: ${book.title}<br>
+        <br>Writers: ${book.writers}<br>
+        <br>Date: ${book.date}<br>
+        <br>ISSN: ${book.ISSN}<br>
+        <br>Image: ${book.photo}<br>
+        <br>Keywords: ${book.keywords}<br>
+        <br>Create Date Time: ${book.createDateTime}<br>
+
+        <div  align="center" style="max-width:380px; border:2px solid #ccc;">
+            <form method="POST" action="${pageContext.request.contextPath}/reader/addcomment">
+                Comment : <input type="text" name="text" /><br><br>
+                <input type="hidden" name="userid" value=${userid} /><br><br>
+                <input type="hidden" name="bookid" value=${book.id} /><br><br>
+                <input type=submit value="Send" style="width:50%;color:darkred">
+            </form>
+        </div>
+
+
         <table style="width:100%">
             <tr>
-                <th>Title</th>
-                <th>Writers</th>
+                <th>Username</th>
+                <th>Comment</th>
                 <th>Date</th>
-                <th>ISSN</th>
-                <th>Image</th>
-                <th>Keywords</th>
-                <th>Create Date Time</th>
-                <th>Book Info</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
 
-
-            <c:forEach items="${books}" var="book">
+            <c:forEach items="${comments}" var="comment">
                 <tr>
-                    <td>${book.title}</td>
-                    <td>${book.writers}</td>
-                    <c:set var = "date" value = '${book.date}'/>
-                    <td>${fn:substring(date, 0, 10)}</td>
-                    <td>${book.ISSN}</td>
-                    <td>${book.photo}</td>
-                    <td>${book.keywords}</td>
-                    <td>${book.createDateTime}</td>
-                    <td><form method="GET" action="${pageContext.request.contextPath}/reader/bookinfo/${book.id}/${id}">
-                        <input type=submit value="Book Info" style="width:100%;color:darkred">
-                    </form></td>
+                    <td>${comment.user.username}</td>
+                    <td>${comment.text}</td>
+                    <td>${comment.createDateTime}</td>
+                    <c:if test="${comment.user.id == userid}">
+                        <td>
+                        <form method="POST" action="${pageContext.request.contextPath}/reader/editcomment/${comment.id}">
+                            <input type=submit value="Edit" style="width:100%;color:darkred">
+                        </form></td>
+                        <td>
+                        <form method="POST" action="${pageContext.request.contextPath}/reader/deletecomment">
+                            <input type="hidden" name="bookid" value=${book.id} />
+                            <input type="hidden" name="userid" value=${userid} />
+                            <input type="hidden" name="id" value=${comment.id} />
+                            <input type=submit value="Delete" style="width:100%;color:darkred">
+                        </form>
+                        </td>
+                    </c:if>
                 </tr>
-            </c:forEach>
+                </c:forEach>
         </table>
+
         </body>
         </html>
     </c:when>
