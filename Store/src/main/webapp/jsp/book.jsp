@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%--<% Boolean haveCookie = false; %>--%>
 <c:set var="haveCookie" value="false" />
@@ -51,6 +52,7 @@
                 <th>ISSN</th>
                 <th>Image</th>
                 <th>Keywords</th>
+                <th>Create Date Time</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </tr>
@@ -61,10 +63,12 @@
                     <td>${book.id}</td>
                     <td>${book.title}</td>
                     <td>${book.writers}</td>
-                    <td>${book.date}</td>
+                    <c:set var = "date" value = '${book.date}'/>
+                    <td>${fn:substring(date, 0, 10)}</td>
                     <td>${book.ISSN}</td>
                     <td>${book.photo}</td>
                     <td>${book.keywords}</td>
+                    <td>${book.createDateTime}</td>
                     <td>
                         <form method="GET" action="${pageContext.request.contextPath}/books/${book.id}/${id}">
                             <input type=submit value="Delete" style="width:100%;color:darkred">
