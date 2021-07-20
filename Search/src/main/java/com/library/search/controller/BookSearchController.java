@@ -30,6 +30,22 @@ public class BookSearchController {
 
     public BookSearchController() {
     }
+    @GetMapping("/search")
+    public ModelAndView search() {
+        //TODO authentication
+        try {
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.setViewName("search");
+//            modelAndView.addObject ( "users", users);
+            return modelAndView;
+        } catch (Exception e) {
+            return new ModelAndView("500");
+        }
+    }
+
+
+
+
     @RequestMapping(
             value = {"search/books"},
             method = {RequestMethod.POST},

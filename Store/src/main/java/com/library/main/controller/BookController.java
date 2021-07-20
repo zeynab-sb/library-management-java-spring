@@ -15,10 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @Validated
@@ -40,6 +37,11 @@ public class BookController {
         modelAndView.setViewName("book");
         modelAndView.addObject ( "books", books);
         modelAndView.addObject("id", id);
+        Map<String, Object> response = new  HashMap<String, Object>();
+        response.put("books" , books);
+        response.put("id" , id);
+        System.out.println("hiii");
+//        return new ModelAndView("jsp/book" , response);
         return modelAndView;
     }
 
@@ -54,9 +56,10 @@ public class BookController {
             book.setKeywords(bookRequest.get("Keywords"));
             Optional<User> user = userRepository.findById(Long.valueOf(bookRequest.get("Publisher")));
             book.setPublisher(user.get());
+            book.setPhoto(bookRequest.get("Image"));
             File image= new File(bookRequest.get("Image"));
             bookRepository.save(book);
-            return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/" + bookRequest.get("Publisher"));
+            return new ModelAndView("redirect:" + "http://localhost:7070/book_publisher/" + bookRequest.get("Publisher"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +70,7 @@ public class BookController {
     @GetMapping("/books/{bookid}/{userid}")
     public ModelAndView deleteBook(@PathVariable("bookid") long id, @PathVariable("userid") long user) {
             bookRepository.deleteById(id);
-            return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/"+ user);
+            return new ModelAndView("redirect:" + "http://localhost:7070/book_publisher/"+ user);
     }
 
     @RequestMapping(value="/books/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
@@ -83,8 +86,10 @@ public class BookController {
                 book.setKeywords(bookRequest.get("Keywords"));
                 book.setTitle(bookRequest.get("Title"));
                 book.setWriters(bookRequest.get("Writers"));
+                book.setPhoto(bookRequest.get("Image"));
+
                 bookRepository.save(book);
-                return new ModelAndView("redirect:" + "http://localhost:9091/book_publisher/"+ bookRequest.get("Publisher"));
+                return new ModelAndView("redirect:" + "http://localhost:7070/book_publisher/"+ bookRequest.get("Publisher"));
             } else {
                 return new ModelAndView("404");
 
