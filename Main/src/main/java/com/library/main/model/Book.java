@@ -34,7 +34,7 @@ public class Book {
     private User publisher;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    private String date;
 
     //@Lob
     @Column(name = "photo")
@@ -51,7 +51,7 @@ public class Book {
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, String photo, String keywords) {
+    public Book(long ISSN, String title, String writers, User publisher, String date, String photo, String keywords) {
         this.ISSN = ISSN;
         this.title = title;
         this.writers = writers;

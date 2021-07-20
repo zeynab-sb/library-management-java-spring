@@ -29,13 +29,13 @@ public class BookSpecification implements Specification<Book> {
             System.out.println("now:" + predicates.get(predicates.size() - 1));
         }
         if (criteria.getWriters() != null && !criteria.getWriters().equals("")) {
-            predicates.add(cb.equal(root.get("author"), criteria.getWriters()));
+            predicates.add(cb.equal(root.get("writers"), criteria.getWriters()));
             System.out.println("here:" + criteria.getWriters());
             System.out.println("now:" + predicates.get(predicates.size() - 1));
         }
         if (!from.equals("") && !to.equals("")) {
 
-            predicates.add(cb.between(root.get("publishYear"), from, to));
+            predicates.add(cb.between(root.get("date"), from, to));
             System.out.println("here:" + from + " " + to);
             System.out.println("now:" + predicates.get(predicates.size() - 1));
         }

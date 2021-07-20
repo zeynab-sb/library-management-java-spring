@@ -16,8 +16,8 @@
         ISSN : <input type="text" name="ISSN"/><br><br>
         Date : <input type="text" name="Date"/><br><br>
         Image : <input type="text" name="Image"/><br><br>
-                <input type="hidden" type="text" name="Publisher" readonly="readonly"
-                           value="<%=publisher%>"/><br><br>
+        <input type="hidden" type="text" name="Publisher" readonly="readonly"
+               value="<%=publisher%>"/><br><br>
         <input type="submit" name="Search" />
 </center>
 </body>

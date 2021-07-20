@@ -64,7 +64,7 @@
 
         <h1 style="text-align:center; color: rgb(145, 8, 104)">Books</h1>
 
-        <form method="GET" action="${pageContext.request.contextPath}/reader/bookinfo/${book.id}/${id}">
+        <form method="GET" action="http://localhost:6060/search">
             <input type=submit value="Search" style="width:100%;color:darkred">
         </form>
         <br>
@@ -101,7 +101,7 @@
         </table>
         <c:if test="${data.size() > 0 }">
             <div class="panel-footer">
-             
+
                 <ul class="pagination">
                     <c:forEach begin="0" end="${totalPages-1}" var="page">
                         <li class="page-item">

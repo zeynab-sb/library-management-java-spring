@@ -1,13 +1,14 @@
 package com.library.search.model;
 
+import com.library.search.model.User;
 import lombok.Getter;
 import lombok.Setter;
-//import org.hibernate.annotations.CreationTimestamp;
-//import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.sql.Blob;
 
 import javax.persistence.*;
-import java.sql.Blob;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,29 +30,29 @@ public class Book {
     @Column(name = "writers", nullable = false)
     private String writers;
 
-    @ManyToOne
+//    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User publisher;
+    private String publisher;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    private String date;
 
-    @Lob
+    //@Lob
     @Column(name = "photo")
-    private Blob photo;
+    private String photo;
 
     @Column(name = "keywords")
     private String keywords;
 
-    //@CreationTimestamp
+    @CreationTimestamp
     @Column(name = "createDateTime")
     private LocalDateTime createDateTime;
 
-   // @UpdateTimestamp
+    @UpdateTimestamp
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, Blob photo, String keywords) {
+    public Book(long ISSN, String title, String writers, String publisher, String date, String photo, String keywords) {
         this.ISSN = ISSN;
         this.title = title;
         this.writers = writers;
@@ -64,10 +65,9 @@ public class Book {
     public Book() {
 
     }
-public LocalDateTime convertStrToDate(String str){
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDateTime dateTime =  LocalDate.parse(str).atStartOfDay();
-    return dateTime;
 
+    public Book(int id, String title) {
+        this.id = id ;
+        this.title = title ;
+    }
 }
-  }
