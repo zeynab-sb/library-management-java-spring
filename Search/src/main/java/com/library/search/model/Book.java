@@ -1,13 +1,13 @@
-package com.library.main.model;
+package com.library.search.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.sql.Blob;
+//import org.hibernate.annotations.CreationTimestamp;
+//import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Blob;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,22 +36,22 @@ public class Book {
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    //@Lob
+    @Lob
     @Column(name = "photo")
-    private String photo;
+    private Blob photo;
 
     @Column(name = "keywords")
     private String keywords;
 
-    @CreationTimestamp
+    //@CreationTimestamp
     @Column(name = "createDateTime")
     private LocalDateTime createDateTime;
 
-    @UpdateTimestamp
+   // @UpdateTimestamp
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, String photo, String keywords) {
+    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, Blob photo, String keywords) {
         this.ISSN = ISSN;
         this.title = title;
         this.writers = writers;
@@ -64,5 +64,10 @@ public class Book {
     public Book() {
 
     }
+public LocalDateTime convertStrToDate(String str){
+//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime dateTime =  LocalDate.parse(str).atStartOfDay();
+    return dateTime;
 
 }
+  }

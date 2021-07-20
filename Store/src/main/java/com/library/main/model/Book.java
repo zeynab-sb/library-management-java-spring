@@ -38,9 +38,9 @@ public class Book {
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Lob
+  //  @Lob
     @Column(name = "photo")
-    private Blob photo;
+    private String photo;
 
     @Column(name = "keywords")
     private String keywords;
@@ -53,7 +53,7 @@ public class Book {
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, Blob photo, String keywords) {
+    public Book(long ISSN, String title, String writers, User publisher, LocalDateTime date, String photo, String keywords) {
         this.ISSN = ISSN;
         this.title = title;
         this.writers = writers;

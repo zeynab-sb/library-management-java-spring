@@ -77,6 +77,27 @@ public class ReaderController {
         response.sendRedirect("http://localhost:9090/reader/bookinfo/" + comment.get("bookid") + "/" + comment.get("userid"));
     }
 
+    @RequestMapping(value="/editcomment/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
+            MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ModelAndView updateUser(@PathVariable("id") long id, @RequestParam Map<String, String> commentRequest) {
+        Optional<Comment> commentData = commentRepository.findById(id);
+        try {
+            if (commentData.isPresent()) {
+                Comment cm = commentData.get();
+
+                cm.setText(commentRequest.get("text"));
+                commentRepository.save(cm);
+                return new ModelAndView("redirect:" +"http://localhost:9090/reader/bookinfo/" + commentRequest.get("bookid") + "/" + commentRequest.get("userid") ) ;
+            } else {
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ModelAndView("404");
+
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ModelAndView("500");
+        }
+    }
     @PostMapping("/deletecomment")
     public void deleteComment(@RequestParam Map<String, String> comment, HttpServletResponse response) throws IOException {
 
