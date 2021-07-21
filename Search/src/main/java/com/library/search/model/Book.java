@@ -1,5 +1,6 @@
-package com.library.main.model;
+package com.library.search.model;
 
+import com.library.search.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,9 +30,9 @@ public class Book {
     @Column(name = "writers", nullable = false)
     private String writers;
 
-    @ManyToOne
+//    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User publisher;
+    private String publisher;
 
     @Column(name = "date", nullable = false)
     private String date;
@@ -51,7 +52,7 @@ public class Book {
     @Column(name = "updateDateTime")
     private LocalDateTime updateDateTime;
 
-    public Book(long ISSN, String title, String writers, User publisher, String date, String photo, String keywords) {
+    public Book(long ISSN, String title, String writers, String publisher, String date, String photo, String keywords) {
         this.ISSN = ISSN;
         this.title = title;
         this.writers = writers;

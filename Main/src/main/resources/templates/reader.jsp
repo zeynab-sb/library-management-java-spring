@@ -27,16 +27,22 @@
             if (cookies[i].getName().equals("persist")){
                 pageContext.setAttribute("haveCookie", "true");
                 sessionId = cookies[i].getValue();
+
                 RestTemplate restTemplate = new RestTemplate();
                 String URL = "http://localhost:8080/auth/authenticate";
                 String res = restTemplate.getForObject(URL + '/' + sessionId, String.class);
+
                 ObjectMapper jacksonObjMapper = new ObjectMapper();
                 JsonNode jsonObj = jacksonObjMapper.readTree(res);
+
                 pageContext.setAttribute("id", jsonObj.get("id"));
                 pageContext.setAttribute("isReader", "true");
 //                }
+
                 break;
             }
+
+
         }
     }
 %>
@@ -64,7 +70,7 @@
 
         <h1 style="text-align:center; color: rgb(145, 8, 104)">Books</h1>
 
-        <form method="GET" action="http://localhost:6060/search">
+        <form method="GET" action="${pageContext.request.contextPath}/reader/bookinfo/${book.id}/${id}">
             <input type=submit value="Search" style="width:100%;color:darkred">
         </form>
         <br>
@@ -99,21 +105,34 @@
                 </tr>
             </c:forEach>
         </table>
-        <c:if test="${data.size() > 0 }">
-            <div class="panel-footer">
+        <nav aria-label="Pagination" th:if="${noOfPages gt 0}" onmouseover="run();">
+            <ul class="pagination justify-content-center font-weight-bold" onmouseover="run();">
+                <li class="page-item" th:classappend="${currentPage eq 0} ? 'disabled'" onmouseover="run();">
+                    <a class="page-link"
+                       th:href="@{/reader/books?page={id}(id=${currentPage lt 2 ? 1 : currentPage})}"
+                       aria-label="Previous" title="Previous Page" data-toggle="tooltip" onmouseover="run();" id="link-1">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
 
-                <ul class="pagination">
-                    <c:forEach begin="0" end="${totalPages-1}" var="page">
-                        <li class="page-item">
-                            <a href="books?page=${page}&size=${size}" class="page-link">${page+1}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </c:if>
+                <li class="page-item" th:classappend="${i eq currentPage + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, noOfPages, 1)}" onmouseover="run();">
+                    <a class="page-link" th:href="@{/reader/books?page={id}(id=${i})}"
+                       th:text="${i}" th:title="${'Page '+ i}" data-toggle="tooltip" id="link-2" value="i"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 eq noOfPages} ? 'disabled'" onmouseover="run()">
+                    <a class="page-link"
+                       th:href="@{/reader/books?page={id}(id=${currentPage + 2})}"
+                       aria-label="Next" title="Next Page" data-toggle="tooltip" id="link-3">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         </body>
         </html>
     </c:when>
+
     <c:otherwise>
         <h1>Please login</h1>
         <input type="button" value="Login" onclick="window.location='/login.jsp'" >

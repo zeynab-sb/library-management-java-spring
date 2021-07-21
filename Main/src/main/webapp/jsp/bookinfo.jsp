@@ -65,7 +65,8 @@
         <br>Writers: ${book.writers}<br>
         <br>Date: ${book.date}<br>
         <br>ISSN: ${book.ISSN}<br>
-        <br>Image: ${book.photo}<br>
+        <br>Image: <img alt="Book" src=${book.photo}
+                width=150" height="70"><br>
         <br>Keywords: ${book.keywords}<br>
         <br>Create Date Time: ${book.createDateTime}<br>
 
@@ -95,7 +96,14 @@
                     <td>${comment.createDateTime}</td>
                     <c:if test="${comment.user.id == userid}">
                         <td>
-                        <form method="POST" action="${pageContext.request.contextPath}/reader/editcomment/${comment.id}">
+                        <form method="POST" action="/jsp/editcomment.jsp">
+                            <input  type="hidden" name="username" value="${comment.user.username}" />
+                            <input  type="hidden" name="text" value="${comment.text}" />
+                            <input  type="hidden" name="createtime" value="${comment.createDateTime}" />
+                            <input  type="hidden" name="userid" value="${userid}" />
+                            <input  type="hidden" name="bookid" value="${book.id}" />
+                            <input  type="hidden" name="commentid" value="${comment.id}" />
+
                             <input type=submit value="Edit" style="width:100%;color:darkred">
                         </form></td>
                         <td>

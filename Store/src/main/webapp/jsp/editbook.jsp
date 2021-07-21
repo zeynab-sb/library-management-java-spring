@@ -27,7 +27,7 @@
 
 
 
-<form method="POST" action="http://localhost:9091/books/<%=id%>">
+<form method="POST" action="http://localhost:7070/books/<%=id%>">
     <table>
         <tr>
 <%--            <td>Book ID</td>--%>

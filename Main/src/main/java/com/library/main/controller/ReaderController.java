@@ -1,5 +1,6 @@
 package com.library.main.controller;
 
+import com.library.main.BookService;
 import com.library.main.model.Book;
 import com.library.main.model.Comment;
 import com.library.main.model.User;
@@ -8,7 +9,12 @@ import com.library.main.repository.CommentRepository;
 import com.library.main.repository.UserRepository;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,14 +22,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/reader")
 public class ReaderController {
-
+    @Autowired
+    private BookService bookService;
     @Autowired
     private BookRepository bookRepository;
 
@@ -34,17 +44,20 @@ public class ReaderController {
     private UserRepository userRepository;
 
     @GetMapping("/books")
-    public ModelAndView getAllBooks(){
+    public ModelAndView getAllBooks(Model model, Pageable pageable) {
+        Page<Book> pages=bookService.getPage(pageable);
 
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("number" ,  pages.getNumber());
+        response.put("totalPages" ,  pages.getTotalPages());
+        response.put("totalElements" ,  pages.getTotalElements());
+        response.put("size" ,   pages.getSize());
+        response.put("books" ,  pages.getContent());
+        response.put("data" ,  pages.getContent());
 
-        List<Book> books = bookRepository.findAll();
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("reader");
-        modelAndView.addObject("books", books);
-
-        return modelAndView;
+        return new ModelAndView("reader" , response);
     }
+
 
     @GetMapping("/bookinfo/{bookid}/{userid}")
     public ModelAndView getBookInfo(@PathVariable("bookid") long bookid, @PathVariable("userid") long userid){
@@ -77,6 +90,27 @@ public class ReaderController {
         response.sendRedirect("http://localhost:9090/reader/bookinfo/" + comment.get("bookid") + "/" + comment.get("userid"));
     }
 
+    @RequestMapping(value="/editcomment/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
+            MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ModelAndView updateUser(@PathVariable("id") long id, @RequestParam Map<String, String> commentRequest) {
+        Optional<Comment> commentData = commentRepository.findById(id);
+        try {
+            if (commentData.isPresent()) {
+                Comment cm = commentData.get();
+
+                cm.setText(commentRequest.get("text"));
+                commentRepository.save(cm);
+                return new ModelAndView("redirect:" +"http://localhost:9090/reader/bookinfo/" + commentRequest.get("bookid") + "/" + commentRequest.get("userid") ) ;
+            } else {
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ModelAndView("404");
+
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ModelAndView("500");
+        }
+    }
     @PostMapping("/deletecomment")
     public void deleteComment(@RequestParam Map<String, String> comment, HttpServletResponse response) throws IOException {
 

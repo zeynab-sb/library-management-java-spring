@@ -64,7 +64,8 @@
                     <c:set var = "date" value = '${book.date}'/>
                     <td>${fn:substring(date, 0, 10)}</td>
                     <td>${book.ISSN}</td>
-                    <td>${book.photo}</td>
+                    <td><img alt="Book" src=${book.photo}
+                            width=150" height="70"></td>
                     <td>${book.keywords}</td>
                     <td>${book.createDateTime}</td>
                     <td>
